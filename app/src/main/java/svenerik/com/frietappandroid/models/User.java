@@ -20,26 +20,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import svenerik.com.frietappandroid.LoginActivity;
+
 /**
  * Created by Erik on 20-4-2015.
  */
-public class User extends AsyncTask<String, String, JSONObject> {
+public class User extends AsyncTask<String, String, ResObject> {
 
     private String basicAuthHeader;
     private static final String TAG = User.class.getSimpleName();
+    private LoginActivity loginActivity;
 
     public User(String username, String password){
         basicAuthHeader = "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
-        bothConstructors();
     }
 
     public User(String basicAuthHeader){
         this.basicAuthHeader = basicAuthHeader;
-        bothConstructors();
     }
 
-    public void bothConstructors(){
-
+    public void setLoginActivity(LoginActivity loginActivity){
+        this.loginActivity = loginActivity;
     }
 
     public String getBasicAuthHeader(){
@@ -56,17 +57,22 @@ public class User extends AsyncTask<String, String, JSONObject> {
     }
 
     @Override
-    protected JSONObject doInBackground(String... args) {
+    protected ResObject doInBackground(String... args) {
         JSONParser jParser = new JSONParser();
         // Getting JSON from URL
-        JSONObject json = jParser.getJSONFromUrl("https://desolate-bayou-9128.herokuapp.com/login", this.getBasicAuthHeader());
-        return json;
+        ResObject res = jParser.getJSONFromUrl("https://desolate-bayou-9128.herokuapp.com/login", this.getBasicAuthHeader());
+        return res;
     }
     @Override
-    protected void onPostExecute(JSONObject json) {
+    protected void onPostExecute(ResObject res) {
         // Getting JSON Array
-        String successful = json.toString();
-        Log.i(TAG, successful);
+        if(res.hasJSON()){
+            String successful = res.json.toString();
+            Log.i(TAG, successful);
+            loginActivity.successLogin();
+        }  else {
+            loginActivity.failedLogin();
+        }
     }
 }
 

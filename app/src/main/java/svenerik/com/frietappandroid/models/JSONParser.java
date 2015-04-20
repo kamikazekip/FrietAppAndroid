@@ -21,13 +21,14 @@ public class JSONParser {
     static InputStream is = null;
     static JSONObject jObj = null;
     static String json = "";
+    static int lastStatusCode = 0;
 
     // constructor
     public JSONParser() {
 
     }
 
-    public JSONObject getJSONFromUrl(String url, String authHeader) {
+    public ResObject getJSONFromUrl(String url, String authHeader) {
 
         // Making HTTP request
         try {
@@ -39,6 +40,7 @@ public class JSONParser {
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
+            lastStatusCode = httpResponse.getStatusLine().getStatusCode();
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -63,14 +65,19 @@ public class JSONParser {
         }
 
         // try parse the string to a JSON object
-        try {
-            jObj = new JSONObject(json);
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        if(lastStatusCode != 401){
+            try {
+                jObj = new JSONObject(json);
+            } catch (JSONException e) {
+                Log.e("JSON Parser", "Error parsing data " + e.toString());
+            }
+            // return JSON String
+            return new ResObject(jObj, lastStatusCode);
+        } else {
+            return new ResObject(lastStatusCode);
         }
 
-        // return JSON String
-        return jObj;
+
 
     }
 }

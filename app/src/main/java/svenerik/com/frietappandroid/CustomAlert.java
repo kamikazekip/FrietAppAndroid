@@ -1,6 +1,7 @@
 package svenerik.com.frietappandroid;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
@@ -11,7 +12,7 @@ public class CustomAlert{
     public CustomAlert(Context context){
         this.context = context;
     }
-
+    public ProgressDialog mDialog;
     public void showAlert(String title, String message){
         new AlertDialog.Builder(context)
                 .setTitle(title)
@@ -23,5 +24,16 @@ public class CustomAlert{
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public void startActivityIndicator(String message){
+        mDialog  = new ProgressDialog(context);
+        mDialog.setMessage(message);
+        mDialog.setCancelable(false);
+        mDialog.show();
+    }
+
+    public void stopActivityIndicator(){
+        mDialog.dismiss();
     }
 }

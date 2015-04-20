@@ -1,6 +1,9 @@
 package svenerik.com.frietappandroid;
 
+import android.app.ActionBar;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -76,6 +79,17 @@ public class LoginActivity extends ActionBarActivity {
 
     public void login(String username, String password){
         userToLogin = new User(username, password);
+        userToLogin.setLoginActivity(this);
+        alertHandler.startActivityIndicator("Inloggen :-)");
         userToLogin.login();
+    }
+
+    public void successLogin(){
+        alertHandler.stopActivityIndicator();
+    }
+
+    public void failedLogin(){
+        alertHandler.stopActivityIndicator();
+        alertHandler.showAlert("Oeps!", "Ongeldige combinatie!");
     }
 }
