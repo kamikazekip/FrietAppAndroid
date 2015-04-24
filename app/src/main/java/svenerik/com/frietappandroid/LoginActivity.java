@@ -2,6 +2,7 @@ package svenerik.com.frietappandroid;
 
 import android.app.ActionBar;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
@@ -84,8 +85,11 @@ public class LoginActivity extends ActionBarActivity {
         userToLogin.login();
     }
 
-    public void successLogin(){
+    public void successLogin(String json){
         alertHandler.stopActivityIndicator();
+        Intent i = new Intent(this, GroupActivity.class);
+        i.putExtra("groups", json);
+        startActivity(i);
     }
 
     public void failedLogin(){

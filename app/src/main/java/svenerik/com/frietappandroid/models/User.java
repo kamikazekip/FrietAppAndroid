@@ -67,9 +67,7 @@ public class User extends AsyncTask<String, String, ResObject> {
     protected void onPostExecute(ResObject res) {
         // Getting JSON Array
         if(res.hasJSON()){
-            String successful = res.json.toString();
-            Log.i(TAG, successful);
-            loginActivity.successLogin();
+            loginActivity.successLogin(res.json.toString());
         }  else {
             loginActivity.failedLogin();
         }
