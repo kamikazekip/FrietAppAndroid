@@ -4,8 +4,8 @@
     <string name="app_name">FrietApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_group">Groups</string>
-    <string name="title_activity_order">Orders</string>
+    <string name="title_activity_group">Friet groepen</string>
+    <string name="title_activity_order">Sessies</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

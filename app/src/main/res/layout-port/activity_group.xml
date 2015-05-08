@@ -11,5 +11,4 @@
         android:layout_height="match_parent"
         android:layout_marginTop="20dip"
         class="svenerik.com.frietappandroid.GroupFragment" />
-
 </LinearLayout>

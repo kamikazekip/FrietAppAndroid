@@ -52,9 +52,9 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
-        createTableView();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+        createTableView();
     }
 
     public void createTableView(){
