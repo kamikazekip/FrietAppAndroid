@@ -19,10 +19,12 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
     private Group[] groups;
     private String[] orders;
     private String[] users;
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String groupsString = getIntent().getStringExtra("groups");
+        this.user = getIntent().getStringExtra("user");
         JSONArray groupsJSON;
         try {
             groupsJSON = new JSONObject(groupsString).getJSONArray("groups");
@@ -40,14 +42,8 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
                 String _id = mJsonObject.getString("_id");
                 String creator = mJsonObject.getString("creator");
                 String name = mJsonObject.getString("name");
-                Group newGroup = new Group(_id, creator, name, orders, users);
+                Group newGroup = new Group(_id, creator, name, orders, users, this.user);
                 groups[i] = newGroup;
-            }
-            for(int iets = 0; iets < groups.length; iets++){
-                Log.i("Result: ", groups[iets].creator);
-                Log.i("Result: ", groups[iets].name);
-                Log.i("Result: ", groups[iets]._id);
-                Log.i("", "");
             }
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
@@ -59,7 +55,7 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 
     public void createTableView(){
         GroupFragment groupFrag = (GroupFragment) getSupportFragmentManager().findFragmentById(R.id.groupFragment);
-        groupFrag.createTableView(groups);
+        groupFrag.createTableView(groups, user);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

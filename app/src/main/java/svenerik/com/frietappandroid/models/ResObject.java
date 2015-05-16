@@ -1,5 +1,6 @@
 package svenerik.com.frietappandroid.models;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 public class ResObject {
     public JSONObject json;
     public int statusCode;
+    public JSONArray jsonArr;
 
     public ResObject(JSONObject json, int statusCode){
         this.json = json;
@@ -18,7 +20,12 @@ public class ResObject {
         this.statusCode = statusCode;
     }
 
+    public ResObject(JSONArray jsonArr, int statusCode){
+        this.jsonArr = jsonArr;
+        this.statusCode = statusCode;
+    }
+
     public boolean hasJSON(){
-        return json != null;
+        return json != null || jsonArr != null;
     }
 }

@@ -70,6 +70,10 @@ public class LoginActivity extends ActionBarActivity {
         validateLoginCorrectness(username, password);
     }
 
+    public void onFastLogin(View button){
+        login("admin", "admin");
+    }
+
     public void validateLoginCorrectness(String username, String password){
         if(username.length() == 0 || password.length() == 0){
             alertHandler.showAlert("Oeps!", "Gebruikersnaam en wachtwoord mogen niet leeg zijn!");
@@ -89,6 +93,7 @@ public class LoginActivity extends ActionBarActivity {
         alertHandler.stopActivityIndicator();
         Intent i = new Intent(this, GroupActivity.class);
         i.putExtra("groups", json);
+        i.putExtra("user", userToLogin.getBasicAuthHeader());
         startActivity(i);
     }
 

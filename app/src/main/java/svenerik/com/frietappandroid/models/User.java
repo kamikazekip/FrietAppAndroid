@@ -60,7 +60,7 @@ public class User extends AsyncTask<String, String, ResObject> {
     protected ResObject doInBackground(String... args) {
         JSONParser jParser = new JSONParser();
         // Getting JSON from URL
-        ResObject res = jParser.getJSONFromUrl("https://desolate-bayou-9128.herokuapp.com/login", this.getBasicAuthHeader());
+        ResObject res = jParser.getJSONFromUrlPOST("https://desolate-bayou-9128.herokuapp.com/login", this.getBasicAuthHeader(), false);
         return res;
     }
     @Override

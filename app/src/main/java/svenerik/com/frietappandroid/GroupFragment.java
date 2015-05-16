@@ -18,10 +18,11 @@ import svenerik.com.frietappandroid.models.Group;
 public class GroupFragment extends Fragment {
 
     private GroupActivity listener;
-
+    private CustomAlert alertHandler;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group, container, false);
+        alertHandler = new CustomAlert(this.getActivity());
         return view;
     }
 
@@ -39,15 +40,19 @@ public class GroupFragment extends Fragment {
         }
     }
 
-    public void createTableView(Group[] groups){
+    public void createTableView(Group[] groups, String user){
         for (int i = 0; i < groups.length; i++) {
             Button newButton = new Button(getActivity());
+            groups[i].setGroupFragment(this);
             newButton.setText(groups[i].name);
             newButton.setTag(groups[i]);
             newButton.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    Log.i("HALLO", "LELELELELEL");
+                    Group clickedGroup = (Group) v.getTag();
+                    clickedGroup.getSessions();
+                    alertHandler.startActivityIndicator("Sessies ophalen");
                 }
             });
             LayoutParams rl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -55,9 +60,17 @@ public class GroupFragment extends Fragment {
             newButton.setLayoutParams(rl);
             ((LinearLayout) listener.findViewById(R.id.linear)).addView(newButton);
         }
+    }
 
-        Log.i("HALLO", "LOLOLOLOLOL");
+    public void success(String orders){
+        alertHandler.stopActivityIndicator();
+        Log.i("Orders: ", orders);
+    }
 
+    public void fail(){
+        alertHandler.stopActivityIndicator();
+        Log.i("MIS", "MIS");
+        alertHandler.showAlert("Oeps!", "Er ging iets mis tijdens het ophalen van de sessies!");
     }
 
     public void goToOrders(Button button) {

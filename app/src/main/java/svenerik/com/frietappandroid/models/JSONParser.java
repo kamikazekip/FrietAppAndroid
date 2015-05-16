@@ -9,8 +9,10 @@ import java.io.UnsupportedEncodingException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +22,7 @@ public class JSONParser {
 
     static InputStream is = null;
     static JSONObject jObj = null;
+    static JSONArray jArray = null;
     static String json = "";
     static int lastStatusCode = 0;
 
@@ -28,7 +31,62 @@ public class JSONParser {
 
     }
 
-    public ResObject getJSONFromUrl(String url, String authHeader) {
+    public ResObject getJSONFromUrl(String url, String authHeader, Boolean array) {
+
+        // Making HTTP request
+        try {
+            // defaultHttpClient
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
+            httpGet.setHeader("Authorization",authHeader);
+
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            is = httpEntity.getContent();
+            lastStatusCode = httpResponse.getStatusLine().getStatusCode();
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "n");
+            }
+            is.close();
+            json = sb.toString();
+        } catch (Exception e) {
+            Log.e("Buffer Error", "Error converting result " + e.toString());
+        }
+
+        // try parse the string to a JSON object
+        if(lastStatusCode == 200){
+            try {
+                if(array){
+                    jArray = new JSONArray(json);
+                    return new ResObject(jArray, lastStatusCode);
+                } else {
+                    jObj = new JSONObject(json);
+                    return new ResObject(jObj, lastStatusCode);
+                }
+            } catch (JSONException e) {
+                Log.e("JSON Parser", "Error parsing data " + e.toString());
+            }
+            return new ResObject(lastStatusCode);
+        } else {
+            return new ResObject(lastStatusCode);
+        }
+    }
+
+    public ResObject getJSONFromUrlPOST(String url, String authHeader, Boolean array) {
 
         // Making HTTP request
         try {
@@ -67,17 +125,19 @@ public class JSONParser {
         // try parse the string to a JSON object
         if(lastStatusCode != 401){
             try {
-                jObj = new JSONObject(json);
+                if(array){
+                    jArray = new JSONArray(json);
+                    return new ResObject(jArray, lastStatusCode);
+                } else {
+                    jObj = new JSONObject(json);
+                    return new ResObject(jObj, lastStatusCode);
+                }
             } catch (JSONException e) {
                 Log.e("JSON Parser", "Error parsing data " + e.toString());
             }
-            // return JSON String
-            return new ResObject(jObj, lastStatusCode);
+            return new ResObject(lastStatusCode);
         } else {
             return new ResObject(lastStatusCode);
         }
-
-
-
     }
 }
