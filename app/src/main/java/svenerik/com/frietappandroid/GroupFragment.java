@@ -1,6 +1,7 @@
 package svenerik.com.frietappandroid;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,8 @@ public class GroupFragment extends Fragment {
 
     private GroupActivity listener;
     private CustomAlert alertHandler;
+    private String user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group, container, false);
@@ -41,7 +44,9 @@ public class GroupFragment extends Fragment {
     }
 
     public void createTableView(Group[] groups, String user){
+        this.user = user;
         for (int i = 0; i < groups.length; i++) {
+            Log.i("HALLO", groups[i]._id);
             Button newButton = new Button(getActivity());
             groups[i].setGroupFragment(this);
             newButton.setText(groups[i].name);
@@ -64,18 +69,14 @@ public class GroupFragment extends Fragment {
 
     public void success(String orders){
         alertHandler.stopActivityIndicator();
-        Log.i("Orders: ", orders);
+        GroupActivity activ = (GroupActivity) this.getActivity();
+        activ.onItemSelected(orders);
     }
 
     public void fail(){
         alertHandler.stopActivityIndicator();
         Log.i("MIS", "MIS");
         alertHandler.showAlert("Oeps!", "Er ging iets mis tijdens het ophalen van de sessies!");
-    }
-
-    public void goToOrders(Button button) {
-        String titel = button.getText().toString();
-        listener.onItemSelected(titel);
     }
 }
 

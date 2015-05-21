@@ -9,6 +9,7 @@ import org.json.JSONObject;
 public class ResObject {
     public JSONObject json;
     public int statusCode;
+    public String lastOperation;
     public JSONArray jsonArr;
 
     public ResObject(JSONObject json, int statusCode){

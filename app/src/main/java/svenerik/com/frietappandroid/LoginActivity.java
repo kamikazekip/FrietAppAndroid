@@ -62,6 +62,11 @@ public class LoginActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onRegister(View button){
+        Intent i = new Intent(this, RegisterActivity.class);
+        startActivity(i);
+    }
+
     public void onLogin(View button){
         EditText usernameField = (EditText) findViewById(R.id.usernameField);
         EditText passwordField = (EditText) findViewById(R.id.passwordField);

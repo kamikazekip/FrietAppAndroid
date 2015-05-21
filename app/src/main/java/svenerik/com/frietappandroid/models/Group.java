@@ -31,7 +31,9 @@ public class Group extends AsyncTask<String, String, ResObject> {
     }
 
     public void getSessions(){
-        this.execute();
+        Group newGroup = new Group(this._id, this.creator, this.name, this.orders, this.users, this.user);
+        newGroup.setGroupFragment(this.groupFragment);
+        newGroup.execute();
     }
 
     @Override

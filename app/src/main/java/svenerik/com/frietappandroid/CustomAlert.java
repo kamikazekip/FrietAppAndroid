@@ -13,6 +13,7 @@ public class CustomAlert{
         this.context = context;
     }
     public ProgressDialog mDialog;
+
     public void showAlert(String title, String message){
         new AlertDialog.Builder(context)
                 .setTitle(title)
@@ -23,6 +24,18 @@ public class CustomAlert{
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    public void showPositiveAlert(String title, String message){
+        new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
                 .show();
     }
 
