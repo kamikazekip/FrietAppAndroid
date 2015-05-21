@@ -89,7 +89,7 @@ public class User extends AsyncTask<String, String, ResObject> {
         } else if(args[0].equals("register")){
             try{
                 JSONObject json = new JSONObject();
-                json.accumulate("userame", args[1]);
+                json.accumulate("username", args[1]);
                 json.accumulate("password", args[2]);
                 res = jParser.postJSONFromUrl("https://desolate-bayou-9128.herokuapp.com/users", json, null, false);
             } catch( JSONException e){
