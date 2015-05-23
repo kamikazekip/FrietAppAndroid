@@ -2,12 +2,16 @@ package svenerik.com.frietappandroid;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -21,21 +25,21 @@ public class OrderFragment extends Fragment {
 
     private Order[] orders;
     private String user;
+    private CustomAlert alertHandler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        alertHandler = new CustomAlert(this.getActivity());
         View view = inflater.inflate(R.layout.fragment_order, container, false);
         return view;
     }
 
     public void receiveOrders(String ordersString, String user){
         this.user = user;
-        Log.i("HALLO", "LOLOL");
         JSONArray ordersJSON;
         try {
-            Log.i("Orders: ", ordersString);
             ordersJSON = new JSONArray(ordersString);
-            orders = new Order[ordersJSON.length()];
+            this.orders = new Order[ordersJSON.length()];
             for (int i = 0; i < ordersJSON.length(); i++) {
                 JSONObject mJsonObject = ordersJSON.getJSONObject(i);
                 String _id = mJsonObject.getString("_id");
@@ -51,11 +55,48 @@ public class OrderFragment extends Fragment {
                 for(int x = 0; x < mJsonObject.getJSONArray("dishes").length(); x++){
                     dishes[x] = mJsonObject.getJSONArray("dishes").getString(x);
                 }
-                orders[i] = new Order(_id, active, group_id, date, creator, snackbarName, snackbarUrl, snackbarPhone, dishes, this.user);
+                this.orders[i] = new Order(_id, active, group_id, date, creator, snackbarName, snackbarUrl, snackbarPhone, dishes, this.user);
+                this.orders[i].setOrderFragment(this);
             }
-            Log.i("Orders", this.orders[0]._id);
+            createTableView(this.orders);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
+        }
+    }
+
+    public void createTableView(Order[] orders){
+        LinearLayout linearLayout = ((LinearLayout) this.getActivity().findViewById(R.id.linearOrders));
+        linearLayout.removeAllViews();
+        if(orders.length == 0){
+            TextView textView = new TextView(this.getActivity());
+            textView.setTextSize(30);
+            textView.setText("Deze groep heeft nog geen sessies!");
+            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+            linearLayout.addView(textView);
+        }
+        for (int i = 0; i < orders.length; i++) {
+            Button newButton = new Button(getActivity());
+            newButton.setText(orders[i].creator + " - " + orders[i].niceDate);
+            newButton.setTag(orders[i]);
+            if(orders[i].active){
+                newButton.setBackgroundColor(Color.parseColor("#ffffffff"));
+                newButton.setTextColor(Color.parseColor("#ff0dd400"));
+            } else {
+                newButton.setBackgroundColor(Color.parseColor("#ffffffff"));
+                newButton.setTextColor(getResources().getColor(android.R.color.black));
+            }
+            newButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Order clickedGroup = (Order) v.getTag();
+                    //clickedGroup.getSessions();
+                    alertHandler.startActivityIndicator("Bestellingen ophalen");
+                }
+            });
+            LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            newButton.setLayoutParams(rl);
+            linearLayout.addView(newButton);
         }
     }
 

@@ -17,6 +17,7 @@ public class Order extends AsyncTask<String, String, ResObject> {
     public Boolean active;
     public String group_id;
     public Date date;
+    public String niceDate;
     public String creator;
     public String snackbarName;
     public String snackbarUrl;
@@ -32,7 +33,8 @@ public class Order extends AsyncTask<String, String, ResObject> {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         try {
             this.date = format.parse(date);
-            System.out.println(date);
+            format = new SimpleDateFormat("dd/MM/yyyy");
+            this.niceDate = format.format(this.date);
         } catch (ParseException e) {
             e.printStackTrace();
         }

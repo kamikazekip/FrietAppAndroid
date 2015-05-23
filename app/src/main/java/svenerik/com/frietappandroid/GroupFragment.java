@@ -2,9 +2,11 @@ package svenerik.com.frietappandroid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import svenerik.com.frietappandroid.R;
 import svenerik.com.frietappandroid.models.Group;
@@ -45,12 +48,21 @@ public class GroupFragment extends Fragment {
 
     public void createTableView(Group[] groups, String user){
         this.user = user;
+        LinearLayout linearLayout = ((LinearLayout) this.getActivity().findViewById(R.id.linear));
+        linearLayout.removeAllViews();
+        if(groups.length == 0){
+            TextView textView = new TextView(this.getActivity());
+            textView.setTextSize(30);
+            textView.setText("U heeft nog geen frietgroepen!");
+            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+            linearLayout.addView(textView);
+        }
         for (int i = 0; i < groups.length; i++) {
-            Log.i("HALLO", groups[i]._id);
             Button newButton = new Button(getActivity());
             groups[i].setGroupFragment(this);
             newButton.setText(groups[i].name);
             newButton.setTag(groups[i]);
+            newButton.setBackgroundColor(Color.parseColor("#fffba907"));
             newButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -63,7 +75,7 @@ public class GroupFragment extends Fragment {
             LayoutParams rl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             rl.topMargin = 20;
             newButton.setLayoutParams(rl);
-            ((LinearLayout) listener.findViewById(R.id.linear)).addView(newButton);
+            linearLayout.addView(newButton);
         }
     }
 

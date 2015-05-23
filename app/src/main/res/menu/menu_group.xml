@@ -2,4 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="svenerik.com.frietappandroid.GroupActivity">
+    <item android:id="@+id/action_toCreateGroup" android:title="Groep aanmaken"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_toSettings" android:title="Instellingen"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>
