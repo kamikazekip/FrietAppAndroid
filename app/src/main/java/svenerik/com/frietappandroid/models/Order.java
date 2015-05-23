@@ -50,7 +50,7 @@ public class Order extends AsyncTask<String, String, ResObject> {
         this.orderFragment = orderFragment;
     }
 
-    public void getSessions(){
+    public void getDishes(){
         this.execute();
     }
 
@@ -61,7 +61,7 @@ public class Order extends AsyncTask<String, String, ResObject> {
 
     @Override
     protected ResObject doInBackground(String... args) {
-        JSONParser jParser = new JSONParser();
+        JSONParser jParser = JSONParser.getInstance();
         // Getting JSON from URL
         String url = "https://desolate-bayou-9128.herokuapp.com/orders/" + this._id + "/dishes";
         ResObject res = jParser.getJSONFromUrl(url, this.user, true);

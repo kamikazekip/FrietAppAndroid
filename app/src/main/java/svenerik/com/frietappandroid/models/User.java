@@ -80,7 +80,7 @@ public class User extends AsyncTask<String, String, ResObject> {
 
     @Override
     protected ResObject doInBackground(String... args) {
-        JSONParser jParser = new JSONParser();
+        JSONParser jParser = JSONParser.getInstance();
         // Getting JSON from URL
         ResObject res = null;
         Log.i("Last2: ", args[0]);

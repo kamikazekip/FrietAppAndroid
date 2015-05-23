@@ -43,7 +43,7 @@ public class Group extends AsyncTask<String, String, ResObject> {
 
     @Override
     protected ResObject doInBackground(String... args) {
-        JSONParser jParser = new JSONParser();
+        JSONParser jParser = JSONParser.getInstance();
         // Getting JSON from URL
         String url = "https://desolate-bayou-9128.herokuapp.com/groups/" + this._id + "/orders";
         ResObject res = jParser.getJSONFromUrl(url, this.user, true);

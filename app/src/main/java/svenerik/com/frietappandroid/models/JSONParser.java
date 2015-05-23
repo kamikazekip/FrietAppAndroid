@@ -21,6 +21,7 @@ import android.util.Log;
 
 public class JSONParser {
 
+    private static JSONParser instance;
     static InputStream is = null;
     static JSONObject jObj = null;
     static JSONArray jArray = null;
@@ -28,8 +29,15 @@ public class JSONParser {
     static int lastStatusCode = 0;
 
     // constructor
-    public JSONParser() {
+    private JSONParser() {
 
+    }
+
+    public static JSONParser getInstance(){
+        if(instance == null){
+            instance = new JSONParser();
+        }
+        return instance;
     }
 
     public ResObject postJSONFromUrl(String url, JSONObject body, String authHeader, Boolean array){
@@ -41,12 +49,13 @@ public class JSONParser {
             if(authHeader != null){
                 httpPost.setHeader("Authorization",authHeader);
             }
-           // jsonObject.accumulate("name", person.getName());
-            json = body.toString();
-            StringEntity se = new StringEntity(json);
-            httpPost.setEntity(se);
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
+            if(body != null){
+                json = body.toString();
+                StringEntity se = new StringEntity(json);
+                httpPost.setEntity(se);
+                httpPost.setHeader("Accept", "application/json");
+                httpPost.setHeader("Content-type", "application/json");
+            }
 
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();

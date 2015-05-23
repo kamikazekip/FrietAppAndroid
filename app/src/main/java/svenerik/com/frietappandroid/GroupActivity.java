@@ -71,7 +71,9 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case(R.id.action_toCreateGroup):
-
+                Intent i = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                i.putExtra("user", this.user);
+                startActivity(i);
                 return true;
             case(R.id.action_toSettings):
 

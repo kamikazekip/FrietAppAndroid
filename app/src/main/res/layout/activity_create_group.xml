@@ -7,4 +7,44 @@
     tools:context="svenerik.com.frietappandroid.CreateGroupActivity"
     android:background="@android:color/white">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Groepsnaam"
+        android:id="@+id/textView3"
+        android:textSize="20dp"
+        android:gravity="left"
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/groupNameField"
+        android:gravity="left|center_vertical"
+        android:backgroundTint="@android:color/black"
+        android:textColor="#fffba907"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aanmaken"
+        android:id="@+id/createGroupButton"
+        android:onClick="onCreateGroup"
+        android:background="#fffba907"
+        android:textSize="20dp"
+        android:layout_below="@+id/groupNameField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

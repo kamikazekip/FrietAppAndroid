@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FrietApp</string>
+    <string name="app_name">Inloggen</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_group">Friet groepen</string>
@@ -11,6 +11,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_register">Registreren</string>
     <string name="title_activity_menu">Menu</string>
-    <string name="title_activity_create_group">CreateGroupActivity</string>
+    <string name="title_activity_create_group">Frietgroep aanmaken</string>
 
 </resources>
