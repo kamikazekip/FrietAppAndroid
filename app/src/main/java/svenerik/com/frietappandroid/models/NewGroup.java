@@ -3,6 +3,8 @@ package svenerik.com.frietappandroid.models;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.net.URLEncoder;
+
 import svenerik.com.frietappandroid.CreateGroupActivity;
 
 /**
@@ -24,7 +26,6 @@ public class NewGroup extends AsyncTask<String, String, ResObject> {
     }
 
     public void create(){
-        Log.i("ONZE GROTE VRIEND USER IS: ", this.user);
         NewGroup newGroup = new NewGroup(this.groupsName, this.user);
         newGroup.setCreateGroupActivity(this.createGroupActivity);
         newGroup.execute();

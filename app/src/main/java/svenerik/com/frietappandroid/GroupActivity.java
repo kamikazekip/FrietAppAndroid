@@ -13,12 +13,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import svenerik.com.frietappandroid.models.Group;
 
 
 public class GroupActivity extends ActionBarActivity implements GroupFragment.OnItemSelectedListener {
 
-    private Group[] groups;
+    private ArrayList<Group> groups;
     private String[] orders;
     private String[] users;
     private String user;
@@ -30,22 +32,9 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
         JSONArray groupsJSON;
         try {
             groupsJSON = new JSONObject(groupsString).getJSONArray("groups");
-            groups = new Group[groupsJSON.length()];
+            groups = new ArrayList<Group>();
             for (int i = 0; i < groupsJSON.length(); i++) {
-                JSONObject mJsonObject = groupsJSON.getJSONObject(i);
-                orders = new String[mJsonObject.getJSONArray("orders").length()];
-                for(int x = 0; x < mJsonObject.getJSONArray("orders").length(); x++){
-                     orders[x] = mJsonObject.getJSONArray("orders").getString(x);
-                }
-                users = new String[mJsonObject.getJSONArray("users").length()];
-                for(int y = 0; y < mJsonObject.getJSONArray("users").length(); y++){
-                    users[y] = mJsonObject.getJSONArray("users").getString(y);
-                }
-                String _id = mJsonObject.getString("_id");
-                String creator = mJsonObject.getString("creator");
-                String name = mJsonObject.getString("name");
-                Group newGroup = new Group(_id, creator, name, orders, users, this.user);
-                groups[i] = newGroup;
+                groups.add(makeGroupFromJSON(groupsJSON.getJSONObject(i)));
             }
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
@@ -57,7 +46,28 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 
     public void createTableView(){
         GroupFragment groupFrag = (GroupFragment) getSupportFragmentManager().findFragmentById(R.id.groupFragment);
-        groupFrag.createTableView(groups, user);
+        groupFrag.createTableView(this.groups, this.user);
+    }
+
+    private Group makeGroupFromJSON(JSONObject newGroup){
+        try{
+            orders = new String[newGroup.getJSONArray("orders").length()];
+            for(int x = 0; x < newGroup.getJSONArray("orders").length(); x++){
+                orders[x] = newGroup.getJSONArray("orders").getString(x);
+            }
+            users = new String[newGroup.getJSONArray("users").length()];
+            for(int y = 0; y < newGroup.getJSONArray("users").length(); y++){
+                users[y] = newGroup.getJSONArray("users").getString(y);
+            }
+            String _id = newGroup.getString("_id");
+            String creator = newGroup.getString("creator");
+            String name = newGroup.getString("name");
+            Group newActualGroup = new Group(_id, creator, name, orders, users, this.user);
+            return newActualGroup;
+        } catch ( JSONException e ){
+            Log.i("JSONEXCEPTION: ", e.toString());
+        }
+        return null;
     }
 
     @Override
@@ -73,7 +83,7 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
             case(R.id.action_toCreateGroup):
                 Intent i = new Intent(getApplicationContext(), CreateGroupActivity.class);
                 i.putExtra("user", this.user);
-                startActivity(i);
+                startActivityForResult(i, 1);
                 return true;
             case(R.id.action_toSettings):
 
@@ -94,6 +104,26 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
             intent.putExtra("orders", orders);
             intent.putExtra("user", this.user);
             startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+
+                String result = intent.getStringExtra("newGroup");
+                try{
+                    Group newGroup = makeGroupFromJSON(new JSONObject(result).getJSONObject("data"));
+                    this.groups.add(newGroup);
+                    GroupFragment groupFrag = (GroupFragment) getSupportFragmentManager().findFragmentById(R.id.groupFragment);
+                    groupFrag.createTableView(this.groups, this.user);
+                    Log.i("NewGroup: ", result);
+                } catch ( JSONException e ) {
+                    Log.i("JSONEXCEPTION: ", e.toString());
+                }
+            }
         }
     }
 }

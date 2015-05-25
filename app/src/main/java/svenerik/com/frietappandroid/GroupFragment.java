@@ -16,6 +16,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import svenerik.com.frietappandroid.R;
 import svenerik.com.frietappandroid.models.Group;
 
@@ -46,22 +48,22 @@ public class GroupFragment extends Fragment {
         }
     }
 
-    public void createTableView(Group[] groups, String user){
+    public void createTableView(ArrayList<Group> groups, String user){
         this.user = user;
         LinearLayout linearLayout = ((LinearLayout) this.getActivity().findViewById(R.id.linear));
         linearLayout.removeAllViews();
-        if(groups.length == 0){
+        if(groups.size() == 0){
             TextView textView = new TextView(this.getActivity());
             textView.setTextSize(30);
             textView.setText("U heeft nog geen frietgroepen!");
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
             linearLayout.addView(textView);
         }
-        for (int i = 0; i < groups.length; i++) {
+        for (int i = 0; i < groups.size(); i++) {
             Button newButton = new Button(getActivity());
-            groups[i].setGroupFragment(this);
-            newButton.setText(groups[i].name);
-            newButton.setTag(groups[i]);
+            groups.get(i).setGroupFragment(this);
+            newButton.setText(groups.get(i).name);
+            newButton.setTag(groups.get(i));
             newButton.setBackgroundColor(Color.parseColor("#fffba907"));
             newButton.setOnClickListener(new View.OnClickListener() {
 
