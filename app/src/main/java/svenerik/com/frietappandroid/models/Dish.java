@@ -6,31 +6,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import svenerik.com.frietappandroid.OrderFragment;
+import svenerik.com.frietappandroid.DishFragment;
 
 
 /**
  * Created by Erik on 18-5-2015.
  */
-public class Order extends AsyncTask<String, String, ResObject> {
+public class Dish extends AsyncTask<String, String, ResObject> {
     public String _id;
-    public Boolean active;
-    public String group_id;
+    public String dish;
+    public String order_id;
     public Date date;
     public String oldDate;
     public String niceDate;
     public String creator;
-    public String snackbarName;
-    public String snackbarUrl;
-    public String snackbarPhone;
-    public String[] dishes;
-    private OrderFragment orderFragment;
+
+    private DishFragment dishFragment;
     private String user;
 
-    public Order(String _id, Boolean active, String group_id, String date, String creator, String snackbarName, String snackbarUrl, String snackbarPhone, String[] dishes, String user){
+    public Dish(String dish, String order_id, String date, String _id, String creator, String user){
         this._id = _id;
-        this.active = active;
-        this.group_id = group_id;
+        this.dish = dish;
+        this.order_id = order_id;
         this.oldDate = date;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         try {
@@ -41,22 +38,13 @@ public class Order extends AsyncTask<String, String, ResObject> {
             e.printStackTrace();
         }
         this.creator = creator;
-        this.snackbarName = snackbarName;
-        this.snackbarUrl = snackbarUrl;
-        this.snackbarPhone = snackbarPhone;
-        this.dishes = dishes;
         this.user = user;
     }
 
-    public void setOrderFragment(OrderFragment orderFragment){
-        this.orderFragment = orderFragment;
+    public void setDishFragment(DishFragment dishFragment){
+        this.dishFragment = dishFragment;
     }
 
-    public void getDishes(){
-        Order newOrder = new Order(this._id, this.active, this.group_id, this.oldDate, this.creator, this.snackbarName, this.snackbarUrl, this.snackbarPhone, this.dishes, this.user);
-        newOrder.setOrderFragment(this.orderFragment);
-        newOrder.execute();
-    }
 
     @Override
     protected void onPreExecute() {
@@ -76,12 +64,12 @@ public class Order extends AsyncTask<String, String, ResObject> {
         // Getting JSON Array
         if(res.hasJSON()){
             if(res.json == null){
-                orderFragment.success(res.jsonArr.toString(), this.snackbarPhone, this._id);
+                dishFragment.success(res.jsonArr.toString());
             } else {
-                orderFragment.success(res.json.toString(), this.snackbarPhone, this._id);
+                dishFragment.success(res.json.toString());
             }
         }  else {
-            orderFragment.fail();
+            dishFragment.fail();
         }
     }
 }

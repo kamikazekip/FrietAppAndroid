@@ -2,6 +2,7 @@ package svenerik.com.frietappandroid;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -89,8 +90,8 @@ public class OrderFragment extends Fragment {
 
                 @Override
                 public void onClick(View v) {
-                    Order clickedGroup = (Order) v.getTag();
-                    //clickedGroup.getSessions();
+                    Order clickedOrder = (Order) v.getTag();
+                    clickedOrder.getDishes();
                     alertHandler.startActivityIndicator("Bestellingen ophalen");
                 }
             });
@@ -100,11 +101,18 @@ public class OrderFragment extends Fragment {
         }
     }
 
-    public void success(String dishes){
-
+    public void success(String dishes, String snackbarPhone, String order_id){
+        alertHandler.stopActivityIndicator();
+        Intent i = new Intent(this.getActivity().getApplicationContext(), DishActivity.class);
+        i.putExtra("dishes", dishes);
+        i.putExtra("user", this.user);
+        i.putExtra("snackbarPhone", snackbarPhone);
+        i.putExtra("order_id", order_id);
+        startActivity(i);
     }
 
     public void fail(){
-
+        alertHandler.stopActivityIndicator();
+        alertHandler.showAlert("Oeps!", "Er is iets mis gegaan tijdens het ophalen van de bestellingen!");
     }
 }

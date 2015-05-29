@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="svenerik.com.frietappandroid.DishActivity">
+    <item android:id="@+id/action_call" android:title="Snackbar bellen"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_finish" android:title="Afronden"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+</menu>

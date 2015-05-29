@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">FrietApp</string>
-    <string name="title_activity_login">Inloggen</string>
+    <string name="title_activity_login">FrietApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_group">Friet groepen</string>
@@ -13,5 +13,6 @@
     <string name="title_activity_register">Registreren</string>
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_create_group">Frietgroep aanmaken</string>
+    <string name="title_activity_dish">Bestellingen</string>
 
 </resources>

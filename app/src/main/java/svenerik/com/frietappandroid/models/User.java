@@ -69,7 +69,6 @@ public class User extends AsyncTask<String, String, ResObject> {
         User newUser = new User(this.basicAuthHeader);
         newUser.setRegisterActivity(this.registerActivity);
         this.lastOperation = "register";
-        Log.i("last: ", lastOperation);
         newUser.execute(this.lastOperation, this.username, this.password);
     }
 
@@ -83,7 +82,6 @@ public class User extends AsyncTask<String, String, ResObject> {
         JSONParser jParser = JSONParser.getInstance();
         // Getting JSON from URL
         ResObject res = null;
-        Log.i("Last2: ", args[0]);
         if(args[0].equals("login")){
             res = jParser.getJSONFromUrlPOST("https://desolate-bayou-9128.herokuapp.com/login", this.getBasicAuthHeader(), false);
         } else if(args[0].equals("register")){
