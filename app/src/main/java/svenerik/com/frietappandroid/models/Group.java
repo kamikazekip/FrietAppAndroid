@@ -1,5 +1,6 @@
 package svenerik.com.frietappandroid.models;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import svenerik.com.frietappandroid.GroupActivity;
@@ -45,7 +46,14 @@ public class Group extends AsyncTask<String, String, ResObject> {
     protected ResObject doInBackground(String... args) {
         JSONParser jParser = JSONParser.getInstance();
         // Getting JSON from URL
-        String url = "https://desolate-bayou-9128.herokuapp.com/groups/" + this._id + "/orders";
+        SharedPreferences settings = this.groupFragment.getActivity().getSharedPreferences("frietapp", 0);
+        boolean sortByActive = settings.getBoolean("sortByActive", true);
+        String url = "";
+        if(sortByActive){
+            url = "https://desolate-bayou-9128.herokuapp.com/groups/" + this._id + "/orders?orderBy=active";
+        } else {
+            url = "https://desolate-bayou-9128.herokuapp.com/groups/" + this._id + "/orders";
+        }
         ResObject res = jParser.getJSONFromUrl(url, this.user, true);
         return res;
     }

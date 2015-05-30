@@ -8,11 +8,12 @@
     <string name="title_activity_group">Friet groepen</string>
     <string name="title_activity_order">Sessies</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_register">Registreren</string>
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_create_group">Frietgroep aanmaken</string>
     <string name="title_activity_dish">Bestellingen</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

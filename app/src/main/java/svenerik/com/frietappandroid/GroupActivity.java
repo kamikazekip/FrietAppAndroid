@@ -86,7 +86,8 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
                 startActivityForResult(i, 1);
                 return true;
             case(R.id.action_toSettings):
-
+                Intent x = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(x);
                 return true;
         }
         return super.onOptionsItemSelected(item);
