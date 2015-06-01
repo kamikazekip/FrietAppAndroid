@@ -55,6 +55,7 @@ public class Group extends AsyncTask<String, String, ResObject> {
             url = "https://desolate-bayou-9128.herokuapp.com/groups/" + this._id + "/orders";
         }
         ResObject res = jParser.getJSONFromUrl(url, this.user, true);
+        res.setGroup_id(this._id);
         return res;
     }
     @Override
@@ -62,9 +63,9 @@ public class Group extends AsyncTask<String, String, ResObject> {
         // Getting JSON Array
         if(res.hasJSON()){
             if(res.json == null){
-                groupFragment.success(res.jsonArr.toString());
+                groupFragment.success(res.jsonArr.toString(), res.getGroup_id());
             } else {
-                groupFragment.success(res.json.toString());
+                groupFragment.success(res.json.toString(), res.getGroup_id());
             }
         }  else {
             groupFragment.fail();

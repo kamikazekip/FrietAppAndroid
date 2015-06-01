@@ -11,10 +11,19 @@ public class ResObject {
     public int statusCode;
     public String lastOperation;
     public JSONArray jsonArr;
+    public String group_id;
 
     public ResObject(JSONObject json, int statusCode){
         this.json = json;
         this.statusCode = statusCode;
+    }
+
+    public void setGroup_id(String group_id){
+        this.group_id = group_id;
+    }
+
+    public String getGroup_id(){
+        return this.group_id;
     }
 
     public ResObject(int statusCode){

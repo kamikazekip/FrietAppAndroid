@@ -14,6 +14,6 @@
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_create_group">Frietgroep aanmaken</string>
     <string name="title_activity_dish">Bestellingen</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
 
 </resources>

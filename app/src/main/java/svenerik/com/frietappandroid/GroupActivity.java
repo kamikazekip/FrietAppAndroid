@@ -95,15 +95,16 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
-    public void onItemSelected(String orders) {
+    public void onItemSelected(String orders, String group_id) {
         OrderFragment fragment = (OrderFragment) getFragmentManager().findFragmentById(R.id.orderFragment);
         if (fragment != null && fragment.isInLayout()) {
-            fragment.receiveOrders(orders, this.user);
+            fragment.receiveOrders(orders, this.user, group_id);
         }
         else {
             Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
             intent.putExtra("orders", orders);
             intent.putExtra("user", this.user);
+            intent.putExtra("group_id", group_id);
             startActivity(intent);
         }
     }

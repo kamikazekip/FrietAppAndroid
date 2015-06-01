@@ -1,12 +1,20 @@
-<LinearLayout
+<RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@android:color/white"
     android:weightSum="1">
+
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:id="@+id/scrollView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/orderCreate">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
@@ -15,4 +23,21 @@
             <!-- Content here -->
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <Button
+        android:layout_width="257dp"
+        android:layout_height="wrap_content"
+        android:text="Order aanmaken"
+        android:id="@+id/orderCreate"
+        android:onClick="onCreateNewOrder"
+        android:background="#fffba907"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:nestedScrollingEnabled="true" />
+
+
+</RelativeLayout>

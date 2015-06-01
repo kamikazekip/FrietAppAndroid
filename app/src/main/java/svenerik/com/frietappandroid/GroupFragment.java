@@ -35,7 +35,7 @@ public class GroupFragment extends Fragment {
     }
 
     public interface OnItemSelectedListener {
-        public void onItemSelected(String titel);
+        public void onItemSelected(String titel, String group_id);
     }
 
     @Override
@@ -81,10 +81,10 @@ public class GroupFragment extends Fragment {
         }
     }
 
-    public void success(String orders){
+    public void success(String orders, String group_id){
         alertHandler.stopActivityIndicator();
         GroupActivity activ = (GroupActivity) this.getActivity();
-        activ.onItemSelected(orders);
+        activ.onItemSelected(orders, group_id);
     }
 
     public void fail(){

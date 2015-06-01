@@ -43,7 +43,6 @@ public class NewDish extends AsyncTask<String, String, ResObject> {
         // Getting JSON from URL
         String url = "https://desolate-bayou-9128.herokuapp.com/orders/" + args[2] + "/dish";
         JSONObject json = null;
-        Log.i("User: ", this.user);
         try{
             json = new JSONObject();
             json.accumulate("dish", args[0]);
